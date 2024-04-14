@@ -1,0 +1,22 @@
+{
+    "name": "jstink",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "jest",
+        "prepublish": "npm test"
+    },
+    "author": "Andy Caine",
+    "license": "MIT",
+    "devDependencies": {
+        "jest": "^29.7.0"
+    },
+    "jest": {
+        "testEnvironment": "node"
+    },
+    "dependencies": {
+        "@aws-sdk/client-kms": "^3.555.0",
+        "google-protobuf": "^3.21.2"
+    }
+}
