@@ -18,5 +18,9 @@
     "dependencies": {
         "@aws-sdk/client-kms": "^3.555.0",
         "google-protobuf": "^3.21.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/andycaine/jstink"
     }
 }
