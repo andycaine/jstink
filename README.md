@@ -33,7 +33,10 @@ Make a note of the key ARN as you'll need it later.
 
 5. Create a new Tinkey key, envelope encrypted with your newly created AWS KMS key:
 ```
-tinkey create-keyset --key-template AES256_GCM --out keyset.json --master-key-uri aws-kms://${MASTER_KEY_ARN}
+tinkey create-keyset \
+    --key-template AES256_GCM \
+    --out keyset.json \
+    --master-key-uri aws-kms://${MASTER_KEY_ARN}
 ```
 Because this key is envelope encrypted with the AWS KMS key you can store it with the data or with the application.
 
@@ -52,17 +55,30 @@ const plaintext = await aead.decrypt(ciphertext, 'associatedData');
 7. At some point, as determined by your cryptoperiod, you'll want to rotate your keys. Tinkey makes this nice and easy. First, create a new key:
 
 ```
-tinkey add-key --key-template AES256_GCM --in keyset.json --out keysetv2.json --master-key-uri aws-kms://${MASTER_KEY_ARN}
+tinkey add-key \
+    --key-template AES256_GCM \
+    --in keyset.json \
+    --out keysetv2.json \
+    --master-key-uri aws-kms://${MASTER_KEY_ARN}
 ```
 
 Once you've deployed this keyset, you can make it the default for encryption:
 
 ```
-tinkey promote-key --key-id <new-key-id> --key-template AES256_GCM --in keysetv2.json --out keysetv3.json --master-key-uri aws-kms://${MASTER_KEY_ARN}
+tinkey promote-key \
+    --key-id <new-key-id> \
+    --key-template AES256_GCM \
+    --in keysetv2.json \
+    --out keysetv3.json \
+    --master-key-uri aws-kms://${MASTER_KEY_ARN}
 ```
 
 Decrypt operations will still use the key that was used for encryption (the encryption key ID is stored as part of the Tink wire format). To completely remove the old key (e.g. in the event of a compromise) you'll need to run a process to re-encrypt all data encrypted with the old key, then you can delete the old key:
 
 ```
-tinkey delete-key --key-template AES256_GCM --in keysetv3.json --out keysetv4.json --master-key-uri aws-kms://${MASTER_KEY_ARN}
+tinkey delete-key \
+    --key-template AES256_GCM \
+    --in keysetv3.json \
+    --out keysetv4.json \
+    --master-key-uri aws-kms://${MASTER_KEY_ARN}
 ```
