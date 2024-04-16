@@ -6,7 +6,9 @@ function encrypt(plaintext, associatedData, key) {
     const iv = crypto.randomBytes(12);
     const cipher = crypto.createCipheriv(algorithm, key, iv);
 
-    cipher.setAAD(Buffer.from(associatedData));
+    if (associatedData !== undefined) {
+        cipher.setAAD(Buffer.from(associatedData));
+    }
     const encrypted = cipher.update(plaintext);
     const remaining = cipher.final();
     const tag = cipher.getAuthTag();
@@ -20,7 +22,9 @@ function encrypt(plaintext, associatedData, key) {
 
 function decrypt(ciphertext, associatedData, key, iv, tag) {
     const decipher = crypto.createDecipheriv(algorithm, key, iv);
-    decipher.setAAD(Buffer.from(associatedData));
+    if (associatedData !== undefined) {
+        decipher.setAAD(Buffer.from(associatedData));
+    }
     decipher.setAuthTag(Buffer.from(tag));
     let decrypted = decipher.update(ciphertext);
     decrypted += decipher.final();

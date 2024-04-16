@@ -10,7 +10,9 @@ Unfortunately for Javascript developers, [there is no production-ready Javascrip
 
 jstink was built to fill this gap. It provides a very simple API that is hard to misuse, and is compatible with Tink ciphertexts and with [Tinkey](https://developers.google.com/tink/tinkey-overview) encrypted keysets.
 
-jstink currently only supports the Authenticated Encryption with Associated Data (AEAD) encryption primitive with AES256_GCM key types envelope encrypted with AWS KMS keys.
+jstink currently only supports 256 bit AES encryption in GCM mode. AES (Advanced Encryption Standard) is recommended by NIST for federal use in the encryption of classified and unclassified data. GCM (Galois/Counter Mode) is also recommended by NIST and provides authentication as well as encryption - that is it ensures the integrity and authenticity of encrypted data in addition to ensuring confidentiality. GCM also accepts associated data which is authenticated but not encrypted.
+
+jstink currently only supports Tink keysets encrypted with AWS KMS keys.
 
 ## Getting Started
 
@@ -82,3 +84,15 @@ tinkey delete-key \
     --out keysetv4.json \
     --master-key-uri aws-kms://${MASTER_KEY_ARN}
 ```
+
+## Using Authenticated Associated Data (AAD)
+
+The GCM algorithm used by jstink is an Authenticated Encryption with Associated Data (AEAD) encryption method. This means that it provides for authentication as well and confidentiality, and also allows the message to contain "associated data". This associated data is authenticated but not encrypted. A decryption operation will only work if the same associated data is used for decryption that was used for encryption.
+
+One use of AAD is to bind a ciphertext to it's encryption context. For example, we can use a username as the associated data for data that is encrypted for a specific user:
+
+```javascript
+const ciphertext = await aead.encrypt(userData, username);
+```
+
+This can prevent attacks where encrypted data is 'cut-and-pasted' from one user to another.
