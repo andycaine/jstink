@@ -69,7 +69,6 @@ Once you've deployed this keyset, you can make it the default for encryption:
 ```
 tinkey promote-key \
     --key-id <new-key-id> \
-    --key-template AES256_GCM \
     --in keysetv2.json \
     --out keysetv3.json \
     --master-key-uri aws-kms://${MASTER_KEY_ARN}
@@ -79,7 +78,7 @@ Decrypt operations will still use the key that was used for encryption (the encr
 
 ```
 tinkey delete-key \
-    --key-template AES256_GCM \
+    --key-id <key-id> \
     --in keysetv3.json \
     --out keysetv4.json \
     --master-key-uri aws-kms://${MASTER_KEY_ARN}
@@ -87,7 +86,7 @@ tinkey delete-key \
 
 ## Using Authenticated Associated Data (AAD)
 
-The GCM algorithm used by jstink is an Authenticated Encryption with Associated Data (AEAD) encryption method. This means that it provides for authentication as well and confidentiality, and also allows the message to contain "associated data". This associated data is authenticated but not encrypted. A decryption operation will only work if the same associated data is used for decryption that was used for encryption.
+The GCM algorithm used by jstink is an Authenticated Encryption with Associated Data (AEAD) encryption method. This means that it provides for authentication as well as confidentiality, and also allows the message to contain "associated data". This associated data is authenticated but not encrypted. A decryption operation will only work if the same associated data is used for decryption that was used for encryption.
 
 One use of AAD is to bind a ciphertext to it's encryption context. For example, we can use a username as the associated data for data that is encrypted for a specific user:
 
