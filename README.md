@@ -10,7 +10,7 @@ Unfortunately for Javascript developers, [there is no production-ready Javascrip
 
 jstink was built to fill this gap. It provides a very simple API that is hard to misuse, and is compatible with Tink ciphertexts and with [Tinkey](https://developers.google.com/tink/tinkey-overview) encrypted keysets.
 
-jstink currently only supports 256 bit AES encryption in GCM mode. AES (Advanced Encryption Standard) is recommended by NIST for federal use in the encryption of classified and unclassified data. GCM (Galois/Counter Mode) is also recommended by NIST and provides authentication as well as encryption - that is it ensures the integrity and authenticity of encrypted data in addition to ensuring confidentiality. GCM also accepts associated data which is authenticated but not encrypted.
+jstink currently only supports AES encryption in GCM mode. AES (Advanced Encryption Standard) is recommended by NIST for federal use in the encryption of classified and unclassified data. GCM (Galois/Counter Mode) is also recommended by NIST and provides authentication as well as encryption - that is it ensures the integrity and authenticity of encrypted data in addition to ensuring confidentiality. GCM also accepts associated data which is authenticated but not encrypted.
 
 jstink currently only supports Tink keysets encrypted with AWS KMS keys.
 

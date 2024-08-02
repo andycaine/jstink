@@ -1,10 +1,20 @@
 const crypto = require('crypto');
 
-const algorithm = 'aes-256-gcm';
+function algorithm(key) {
+    if (key.length === 32) {
+        return 'aes-256-gcm';
+    } else if (key.length === 24) {
+        return 'aes-192-gcm';
+    } else if (key.length === 16) {
+        return 'aes-128-gcm';
+    } else {
+        throw new Error('Invalid AES-GCM key length');
+    }
+}
 
 function encrypt(plaintext, associatedData, key) {
     const iv = crypto.randomBytes(12);
-    const cipher = crypto.createCipheriv(algorithm, key, iv);
+    const cipher = crypto.createCipheriv(algorithm(key), key, iv);
 
     if (associatedData !== undefined) {
         cipher.setAAD(Buffer.from(associatedData));
@@ -14,14 +24,13 @@ function encrypt(plaintext, associatedData, key) {
     const tag = cipher.getAuthTag();
     return {
         ciphertext: Buffer.concat([encrypted, remaining]),
-        tag,
         iv,
         tag
     };
 }
 
 function decrypt(ciphertext, associatedData, key, iv, tag) {
-    const decipher = crypto.createDecipheriv(algorithm, key, iv);
+    const decipher = crypto.createDecipheriv(algorithm(key), key, iv);
     if (associatedData !== undefined) {
         decipher.setAAD(Buffer.from(associatedData));
     }
