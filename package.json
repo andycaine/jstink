@@ -16,7 +16,7 @@
         "testEnvironment": "node"
     },
     "dependencies": {
-        "@aws-sdk/client-kms": "^3.632.0",
+        "@aws-sdk/client-kms": "^3.658.1",
         "google-protobuf": "^3.21.4"
     },
     "repository": {
