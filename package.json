@@ -1,6 +1,6 @@
 {
     "name": "jstink",
-    "version": "1.2.5",
+    "version": "1.2.6",
     "description": "A simple, easy-to-use Javascript crytopgraphy library.",
     "main": "src/index.js",
     "scripts": {
@@ -16,7 +16,7 @@
         "testEnvironment": "node"
     },
     "dependencies": {
-        "@aws-sdk/client-kms": "^3.693.0",
+        "@aws-sdk/client-kms": "^3.715.0",
         "google-protobuf": "^3.21.4"
     },
     "repository": {
