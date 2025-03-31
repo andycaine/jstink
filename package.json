@@ -1,11 +1,10 @@
 {
     "name": "jstink",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "description": "A simple, easy-to-use Javascript crytopgraphy library.",
     "main": "src/index.js",
     "scripts": {
-        "test": "jest",
-        "prepublish": "npm test"
+        "test": "jest"
     },
     "author": "Andy Caine",
     "license": "MIT",
